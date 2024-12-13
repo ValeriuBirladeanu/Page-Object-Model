@@ -1,12 +1,8 @@
+const { APIUtils } = require("../utils/APIUTILS.js");
 const { BuzzPage } = require("../pages/BuzzPage");
 const { url } = require("../utils/urls.js");
-const { test, expect, request } = require("@playwright/test");
-const { APIUtils } = require("../utils/APIUTILS.js");
-
-const postBuzzPayLoad = {
-  type: "text",
-  text: "Sometext",
-};
+const { expect, request } = require("@playwright/test");
+const { dataTest: test } = require("../utils/baseData");
 
 let context;
 let page;
@@ -24,13 +20,18 @@ test.beforeAll(async ({ browser }) => {
   await context.addCookies(cookies);
 });
 
-test("Add message in Buzz", async () => {
+test("Add message in Buzz", async ({ randomData }) => {
   const buzzPage = new BuzzPage(page);
   await buzzPage.goToBuzzMenu();
 
-  const postMessage = await apiUtils.createMessage(postBuzzPayLoad, context);
+ const postBuzzPayLoad = {
+    type: "text",
+    text: randomData.message,
+  };
+
+  await apiUtils.createMessage(postBuzzPayLoad, context);
   await page.reload();
 
   const postText = await buzzPage.postedText.first().textContent();
-  expect(postText).toContain(postBuzzPayLoad.text);
+  expect(postText).toContain(randomData.message); 
 });

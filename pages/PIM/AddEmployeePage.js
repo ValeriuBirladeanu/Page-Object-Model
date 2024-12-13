@@ -20,7 +20,7 @@ class AddEmployee extends PimBasePage {
     await this.lastNameField.fill(lastname);
     await this.employeeIdField.last().fill(employeeid);
     await this.saveButton.click();
-    await this.page.waitForLoadState("networkidle");
+    await this.page.waitForLoadState("networkidle"); 
   }
 }
 

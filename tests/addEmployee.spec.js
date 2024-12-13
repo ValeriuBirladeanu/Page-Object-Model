@@ -34,5 +34,6 @@ test("Verify that duplicate employee IDs are not allowed", async ({
     randomData.lastName,
     existedEmployeeId
   );
+  await expect(page).toHaveURL(url.addEmployeeUrl);
   await expect(addEmployee.employeeIdAlreadyExistsText).toBeVisible();
 });
