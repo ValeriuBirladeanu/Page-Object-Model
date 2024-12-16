@@ -9,6 +9,7 @@ let page;
 let apiUtils;
 
 test.beforeAll(async ({ browser }) => {
+  test.setTimeout(90000); 
   context = await browser.newContext();
   page = await context.newPage();
   apiUtils = new APIUtils();
@@ -21,7 +22,7 @@ test.beforeAll(async ({ browser }) => {
 });
 
 test("Verify that duplicate employee IDs are not allowed", async ({
-  randomData,
+  randomData, 
 }) => {
   const addEmployee = new AddEmployee(page);
   await addEmployee.goToPimMenu();

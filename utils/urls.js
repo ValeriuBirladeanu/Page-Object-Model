@@ -9,8 +9,16 @@ export const url = {
     "https://opensource-demo.orangehrmlive.com/web/index.php/auth/sendPasswordReset",
   addEmployeeUrl:
     "https://opensource-demo.orangehrmlive.com/web/index.php/pim/addEmployee",
-  listEmployeeUrl:
+  employeeListUrl:
+    "https://opensource-demo.orangehrmlive.com/web/index.php/pim/viewEmployeeList",
+  responseListEmployeeUrl:
     "https://opensource-demo.orangehrmlive.com/web/index.php/api/v2/pim/employees",
   postBuzzUrl:
     "https://opensource-demo.orangehrmlive.com/web/index.php/api/v2/buzz/posts",
+  adminUrl:
+    "https://opensource-demo.orangehrmlive.com/web/index.php/admin/viewSystemUsers",
+  jobTitlesListUrl:
+    "https://opensource-demo.orangehrmlive.com/web/index.php/admin/viewJobTitleList",
+  payGradesListUrl:
+    "https://opensource-demo.orangehrmlive.com/web/index.php/admin/viewPayGrades",
 };

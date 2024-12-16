@@ -15,7 +15,7 @@ class APIUtils {
     const cookies = await context.cookies();
     const cookieHeader = cookies.map((c) => `${c.name}=${c.value}`).join("; ");
 
-    const response = await this.apiContext.get(url.listEmployeeUrl, {
+    const response = await this.apiContext.get(url.responseListEmployeeUrl, {
       headers: {
         Cookie: cookieHeader,
         "Content-Type": "application/json",

@@ -18,4 +18,4 @@ test('Verify that the "Forgot Password" functionality works as expected. (with o
   await resetPasswordPage.clickResetPasswordButton();
   await expect(page).toHaveURL(url.responsResetPasswordUrl);
   await expect(resetPasswordPage.resetPasswordConteiner).toBeVisible();
-});
+});    

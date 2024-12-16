@@ -42,7 +42,7 @@ test("Verify that invalid credentials display the correct error message", async 
       await expect(page).toHaveURL(url.loginUrl);
       await expect(loginPage.invalidCredentialsText).toBeVisible();
     });
-  }
+  }   
 });
 
 test('Verify the behavior when fields are left blank and the "Login" button is clicked', async ({

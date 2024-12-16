@@ -13,6 +13,9 @@ class AddEmployee extends PimBasePage {
     this.personalDetailsMenu = page.locator(
       'div[class="orangehrm-edit-employee-navigation"]'
     );
+    this.employeeIdAlreadyExistsText = page.locator(
+      'span:has-text("Employee Id already exists")'
+    );
   }
 
   async notAddDuplicateEmployeeById(firstname, lastname, employeeid) {
@@ -22,6 +25,14 @@ class AddEmployee extends PimBasePage {
     await this.saveButton.click();
     await this.page.waitForLoadState("networkidle"); 
   }
-}
+
+  async addEmployee(firstname, lastname, employeeid) {
+    await this.firstNameField.fill(firstname);
+    await this.lastNameField.fill(lastname);
+    await this.employeeIdField.last().fill(employeeid);
+    await this.saveButton.click();
+    await this.page.waitForLoadState("networkidle"); 
+  }
+} 
 
 module.exports = { AddEmployee };

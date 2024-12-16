@@ -44,5 +44,7 @@ export const dataTest = test.extend({
     lastName: faker.person.lastName(),
     password: faker.internet.password(),
     message: faker.lorem.sentence(),
+    employeeId: faker.string.numeric(4),
+    jobTitle: faker.person.jobTitle(),
   },
 });
