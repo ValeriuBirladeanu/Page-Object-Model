@@ -1,10 +1,10 @@
 const { url } = require("../utils/urls.js");
 
 class APIUtils {
-  async getCookie(page) {
+  async getCookie(page, usermane, password) {
     await page.goto(url.loginUrl);
-    await page.locator('[name="username"]').fill("Admin");
-    await page.locator('[type="password"]').fill("admin123");
+    await page.locator('[name="username"]').fill(usermane);
+    await page.locator('[type="password"]').fill(password);
     await page.locator('[type="submit"]').click();
     await page.waitForLoadState("networkidle");
     const cookies = await page.context().cookies();

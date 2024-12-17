@@ -16,6 +16,7 @@ class LoginPage {
     this.requiredText = page.locator(
       'span[class="oxd-text oxd-text--span oxd-input-field-error-message oxd-input-group__message"]'
     );
+    this.menuItems = page.locator('li[class="oxd-main-menu-item-wrapper"]');
   }
 
   async goTo(url) {
@@ -26,7 +27,7 @@ class LoginPage {
     await this.userNameField.fill(username);
   }
 
-  async fillPasswordFiled(password) {
+  async fillPasswordField(password) {
     await this.passwordField.fill(password);
   }
 
@@ -48,6 +49,11 @@ class LoginPage {
       return computedStyle.webkitTextSecurity !== "none";
     });
   }
-}
 
+  async getMenuItems() {
+    await this.menuItems.nth(0).waitFor()
+      const titles = await this.menuItems.allTextContents();
+      return titles
+  }
+}
 module.exports = { LoginPage };

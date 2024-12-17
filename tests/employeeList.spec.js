@@ -3,7 +3,7 @@ const { EmployeeList } = require("../pages/PIM/EmployeeListPage.js");
 const { url } = require("../utils/urls.js");
 const { expect, request } = require("@playwright/test");
 const { APIUtils } = require("../utils/APIUTILS.js");
-const { dataTest: test } = require("../utils/baseData");
+const { dataTestAdmin: test } = require("../utils/baseDataAdmin");
 
 let context;
 let page;

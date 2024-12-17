@@ -1,7 +1,8 @@
-const { dataTest: test } = require("../utils/baseData");
+const { dataTestAdmin: test } = require("../utils/baseDataAdmin");
 import { LoginPage } from "../pages/LoginPage";
 import { url } from "../utils/urls";
 import { expect } from "@playwright/test";
+import { menuItems } from '../utils/staticDataAdmin';
 
 test("Verify that valid credentials allow the user to log in successfully", async ({
   page,
@@ -9,12 +10,9 @@ test("Verify that valid credentials allow the user to log in successfully", asyn
 }) => {
   const loginPage = new LoginPage(page);
   await loginPage.goTo(url.loginUrl);
-
   await loginPage.fillUsernameField(validCredentials.username);
-  await loginPage.fillPasswordFiled(validCredentials.password);
-
+  await loginPage.fillPasswordField(validCredentials.password);
   await loginPage.submit();
-
   await expect(page).toHaveURL(url.dashboardUrl);
   await expect(loginPage.dashboardText).toBeVisible();
 });
@@ -65,4 +63,21 @@ test('Verify the behavior when fields are left blank and the "Login" button is c
       await expect(loginPage.requiredText.first()).toBeVisible();
     });
   }
+});
+
+test.only("Validate left menu list of items for admin", async ({
+  page,
+  validCredentials,
+}) => {
+  const loginPage = new LoginPage(page);
+  await loginPage.goTo(url.loginUrl);
+  await loginPage.fillUsernameField(validCredentials.username);
+  await loginPage.fillPasswordField(validCredentials.password);
+  await loginPage.submit();
+  await expect(page).toHaveURL(url.dashboardUrl);
+  await expect(loginPage.dashboardText).toBeVisible();
+  const actualMenuItems = await loginPage.getMenuItems(); 
+  expect(actualMenuItems).toEqual(menuItems);
+  console.log("Expected menu items:", menuItems);
+  console.log("Actual menu items:", actualMenuItems);
 });

@@ -4,7 +4,7 @@ const { faker } = require("@faker-js/faker");
 const validUserName = "Admin";
 const validPassword = "admin123";
 
-export const dataTest = test.extend({
+export const dataTestAdmin = test.extend({
   validCredentials: {
     username: validUserName,
     password: validPassword,

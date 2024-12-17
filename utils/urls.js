@@ -21,4 +21,8 @@ export const url = {
     "https://opensource-demo.orangehrmlive.com/web/index.php/admin/viewJobTitleList",
   payGradesListUrl:
     "https://opensource-demo.orangehrmlive.com/web/index.php/admin/viewPayGrades",
+  userUpdatePasswordUrl:
+    "https://opensource-demo.orangehrmlive.com/web/index.php/pim/updatePassword",
+  skilsUrl:
+    "https://opensource-demo.orangehrmlive.com/web/index.php/admin/viewSkills",
 };

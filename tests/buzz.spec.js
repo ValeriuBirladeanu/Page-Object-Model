@@ -2,21 +2,21 @@ const { APIUtils } = require("../utils/APIUTILS.js");
 const { BuzzPage } = require("../pages/BuzzPage");
 const { url } = require("../utils/urls.js");
 const { expect, request } = require("@playwright/test");
-const { dataTest: test } = require("../utils/baseData");
+const { dataTestAdmin: test } = require("../utils/baseDataAdmin");
 
 let context;
 let page;
 let apiUtils;
 
-test.beforeAll(async ({ browser }) => {
+test.beforeAll(async ({ browser, validCredentials }) => {
   context = await browser.newContext();
   page = await context.newPage();
   apiUtils = new APIUtils();
 
   apiUtils.apiContext = await request.newContext({
-    baseURL: url.loginUrl,
-  });
-  const cookies = await apiUtils.getCookie(page);
+    baseURL: url.loginUrl
+    });
+  const cookies = await apiUtils.getCookie(page, validCredentials.username, validCredentials.password);
   await context.addCookies(cookies);
 });
 

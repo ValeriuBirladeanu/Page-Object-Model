@@ -1,4 +1,4 @@
-const { dataTest: test } = require("../utils/baseData");
+const { dataTestAdmin: test } = require("../utils/baseDataAdmin");
 import { LoginPage } from "../pages/LoginPage";
 import { ResetPasswordPage } from "../pages/ResetPasswordPage";
 import { url } from "../utils/urls";

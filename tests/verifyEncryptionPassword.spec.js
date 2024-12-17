@@ -1,4 +1,4 @@
-const { dataTest: test } = require("../utils/baseData");
+const { dataTestAdmin: test } = require("../utils/baseDataAdmin");
 import { LoginPage } from "../pages/LoginPage";
 import { url } from "../utils/urls";
 import { expect } from "@playwright/test";

@@ -6,6 +6,8 @@ class AdminBasePage {
       this.jobTiles = page.locator('a:has-text("Job Titles")');
       this.systemUsersText = page.locator('h5:has-text("System Users")');
       this.payGrades = page.locator('a:has-text("Pay Grades")');
+      this.qualifications = page.locator('span:has-text("Qualifications ")');
+      this.skils = page.locator('a:has-text("Skills")');
     }
   
     async goToAdminMenu() {
@@ -20,7 +22,11 @@ class AdminBasePage {
     async goToPayGrades() {
         await this.job.click();
         await this.payGrades.click();
-      }
+    }
+    
+    async goToSkils() {
+      await this.qualifications.click();
+      await this.skils.click();
+    }
   }
-  
   module.exports = { AdminBasePage };

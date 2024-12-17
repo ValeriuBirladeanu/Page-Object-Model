@@ -2,22 +2,21 @@ const { JobTitles } = require("../pages/Admin/jobTitlesPage");
 const { url } = require("../utils/urls.js");
 const { expect, request } = require("@playwright/test");
 const { APIUtils } = require("../utils/APIUTILS.js");
-const { dataTest: test } = require("../utils/baseData");
+const { dataTestAdmin: test } = require("../utils/baseDataAdmin.js");
 
 let context;
 let page;
 let apiUtils;
 
-test.beforeAll(async ({ browser }) => {
-  test.setTimeout(50000);
+test.beforeAll(async ({ browser, validCredentials }) => {
   context = await browser.newContext();
   page = await context.newPage();
   apiUtils = new APIUtils();
 
   apiUtils.apiContext = await request.newContext({
-    baseURL: url.loginUrl,
-  });
-  const cookies = await apiUtils.getCookie(page);
+    baseURL: url.loginUrl
+    });
+  const cookies = await apiUtils.getCookie(page, validCredentials.username, validCredentials.password);
   await context.addCookies(cookies);
 });
 
