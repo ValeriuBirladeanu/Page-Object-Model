@@ -40,5 +40,20 @@ class HeaderPage {
       await this.profileMenu.click();
       await this.logoutItem.click();
     }
+
+    async loginWithPassword(username, password) {
+      await this.page.locator('[name="username"]').fill(username);
+      await this.page.locator('[type="password"]').fill(password);
+      await this.page.locator('[type="submit"]').click();
+    }
+    
+    async getErrorMessageForInvalidLogin() {
+      const errorMessageLocator = this.page.locator('p[class="oxd-text oxd-text--p oxd-alert-content-text"]'); 
+        return errorMessageLocator;
+    }
+    
+    async isOnLoginPage() {
+      return this.page.url() === url.loginUrl;
+    }
   } 
   module.exports = { HeaderPage };

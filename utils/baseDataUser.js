@@ -1,7 +1,7 @@
 const { test } = require("@playwright/test");
 const { faker } = require("@faker-js/faker");
 
-const validUserName = "Repudiandae";
+const validUserName = "Pariatur";
 const validPassword = "Pa$$w0rd!";
 
 export const dataTestUser = test.extend({
@@ -12,6 +12,5 @@ export const dataTestUser = test.extend({
 
   randomData: {
     password: faker.internet.password(),
-   
   },
 })

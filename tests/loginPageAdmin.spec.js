@@ -65,7 +65,7 @@ test('Verify the behavior when fields are left blank and the "Login" button is c
   }
 });
 
-test.only("Validate left menu list of items for admin", async ({
+test("Validate left menu list of items for admin", async ({
   page,
   validCredentials,
 }) => {

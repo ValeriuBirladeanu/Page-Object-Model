@@ -14,9 +14,13 @@ test.beforeAll(async ({ browser, validCredentials }) => {
   apiUtils = new APIUtils();
 
   apiUtils.apiContext = await request.newContext({
-    baseURL: url.loginUrl
-    });
-  const cookies = await apiUtils.getCookie(page, validCredentials.username, validCredentials.password);
+    baseURL: url.loginUrl,
+  });
+  const cookies = await apiUtils.getCookie(
+    page,
+    validCredentials.username,
+    validCredentials.password
+  );
   await context.addCookies(cookies);
 });
 
@@ -35,12 +39,12 @@ test("Add new Job Titles (admin)", async ({ randomData }) => {
     randomData.lastName,
     randomData.firstName
   );
-  console.log('newJobTitle:', newJobTitle);
+  console.log("newJobTitle:", newJobTitle);
 
   await expect(page).toHaveURL(url.jobTitlesListUrl);
   await expect(addJobTitles.jobTitlesText).toBeVisible();
 
   const extractedJobTitles = await addJobTitles.extractJobTitles();
   expect(extractedJobTitles).toContain(newJobTitle.title);
-  console.log('extractedJobTitles:', extractedJobTitles);
+  console.log("extractedJobTitles:", extractedJobTitles);
 });

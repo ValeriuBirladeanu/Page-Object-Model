@@ -1,6 +1,6 @@
 const { PimBasePage } = require("../../pages/PIM/PimBasePage");
 
-class AddEmployee extends PimBasePage {
+class AddEmployeePage extends PimBasePage {
   constructor(page) {
     super(page);
     this.addEmployeeText = page.locator('h6:has-text("Add Employee")');
@@ -17,7 +17,7 @@ class AddEmployee extends PimBasePage {
       'span:has-text("Employee Id already exists")'
     );
   }
-
+ 
   async notAddDuplicateEmployeeById(firstname, lastname, employeeid) {
     await this.firstNameField.fill(firstname);
     await this.lastNameField.fill(lastname);
@@ -35,4 +35,4 @@ class AddEmployee extends PimBasePage {
   }
 } 
 
-module.exports = { AddEmployee };
+module.exports = { AddEmployeePage };
