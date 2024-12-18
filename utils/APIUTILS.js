@@ -17,7 +17,7 @@ class APIUtils {
 
     const response = await this.apiContext.get(url.responseListEmployeeUrl, {
       headers: {
-        Cookie: cookieHeader,
+        Cookie: cookieHeader, 
         "Content-Type": "application/json",
       },
     });
@@ -37,6 +37,22 @@ class APIUtils {
 
     const postResponse = await this.apiContext.post(url.postBuzzUrl, {
       data: postBuzzPayLoad,
+      headers: {
+        Cookie: cookieHeader,
+        "Content-Type": "application/json",
+      },
+    });
+
+    const postResponseJson = await postResponse.json();
+    return postResponseJson;
+  }
+
+  async addUser(postUserPayLoad, context) {
+    const cookies = await context.cookies();
+    const cookieHeader = cookies.map((c) => `${c.name}=${c.value}`).join("; ");
+
+    const postResponse = await this.apiContext.post(url.addUserUrl, {
+      data: postUserPayLoad,
       headers: {
         Cookie: cookieHeader,
         "Content-Type": "application/json",

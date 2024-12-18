@@ -25,4 +25,6 @@ export const url = {
     "https://opensource-demo.orangehrmlive.com/web/index.php/pim/updatePassword",
   skilsUrl:
     "https://opensource-demo.orangehrmlive.com/web/index.php/admin/viewSkills",
+  addUserUrl:
+    "https://opensource-demo.orangehrmlive.com/web/index.php/api/v2/admin/users",
 };

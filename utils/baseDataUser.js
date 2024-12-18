@@ -13,4 +13,4 @@ export const dataTestUser = test.extend({
   randomData: {
     password: faker.internet.password(),
   },
-})
+}) 

@@ -2,11 +2,13 @@ const { APIUtils } = require("../utils/APIUTILS.js");
 const { HeaderPage } = require("../pages/HeaderPage");
 const { url } = require("../utils/urls.js");
 const { expect, request} = require("@playwright/test");
-const { dataTestUser: test } = require("../utils/baseDataUser");
+const { dataTestAdmin: test } = require("../utils/baseDataAdmin");
+const { newUserPayload } = require("../utils/userPayload");
 
 let context;
 let page;
 let apiUtils;
+let newUser;
 
 test.beforeAll(async ({ browser, validCredentials }) => {
   context = await browser.newContext();
@@ -24,15 +26,32 @@ test.beforeAll(async ({ browser, validCredentials }) => {
   await context.addCookies(cookies);
 });
 
-test("Change password for user", async ({ validCredentials, randomData }) => {
+test.beforeEach(async () => {
+  // Crearea unui utilizator nou 
+  newUser = await apiUtils.addUser(newUserPayload, context);
+  console.log("New user created:", newUser);
+
+  // Logare cu utilizatorul nou creat
   const headerPage = new HeaderPage(page);
+  await headerPage.goToLogout();
+  await expect(page).toHaveURL(url.loginUrl);
+  await expect(headerPage.loginSlot).toBeVisible();
+  await headerPage.loginWithPassword(newUserPayload.username, newUserPayload.password);
+  await expect(page).toHaveURL(url.dashboardUrl);
+});
+
+test("Change password for user", async ({ randomData }) => {
+  const headerPage = new HeaderPage(page);
+
+  // Navigare la schimbarea parolei
   await headerPage.goToProfileChangePassword();
   await expect(page).toHaveURL(url.userUpdatePasswordUrl);
   await expect(headerPage.userPasswordText).toBeVisible();
 
+  // Schimbarea parolei
   const newPassword = randomData.password;
   console.log("newPassword: ", newPassword);
-  await headerPage.fillCurrentPasswordField(validCredentials.password);
+  await headerPage.fillCurrentPasswordField(newUserPayload.password); // Parola veche
   await headerPage.fillPasswordField(newPassword);
   await headerPage.fillConfirmPasswordField(newPassword);
   await headerPage.clickSaveButton();
@@ -43,14 +62,12 @@ test("Change password for user", async ({ validCredentials, randomData }) => {
   await expect(page).toHaveURL(url.loginUrl);
   await expect(headerPage.loginSlot).toBeVisible();
 
-   // Login old password 
-   await headerPage.loginWithPassword(validCredentials.username, validCredentials.password);
-   const errorMessageLocator = await headerPage.getErrorMessageForInvalidLogin();
-   await expect(errorMessageLocator).toBeVisible();
- 
-   // Login new password
-   await headerPage.loginWithPassword(validCredentials.username, newPassword);
-   await page.goto(url.dashboardUrl);
-   await expect(page).toHaveURL(url.dashboardUrl);
-   await expect(headerPage.dashboardText).toBeVisible();
+  // Verificare login cu parola veche (ar trebui să dea eroare)
+  await headerPage.loginWithPassword(newUserPayload.username, newUserPayload.password);
+  const errorMessageLocator = await headerPage.getErrorMessageForInvalidLogin();
+  await expect(errorMessageLocator).toBeVisible();
+
+  // Verificare login cu parola nouă
+  await headerPage.loginWithPassword(newUserPayload.username, newPassword);
+  await expect(page).toHaveURL(url.dashboardUrl);
 });

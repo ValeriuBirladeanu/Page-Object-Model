@@ -6,7 +6,7 @@ import { expect } from "@playwright/test";
 import { menuItems } from '../utils/staticDataAdmin';
 
 
-test.only("Validate left menu list of items for admin", async ({
+test("Validate left menu list of items for admin", async ({
   page,
   validCredentials,
 }) => {

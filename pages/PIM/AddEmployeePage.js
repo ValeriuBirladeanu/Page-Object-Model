@@ -25,14 +25,5 @@ class AddEmployeePage extends PimBasePage {
     await this.saveButton.click();
     await this.page.waitForLoadState("networkidle"); 
   }
-
-  async addEmployee(firstname, lastname, employeeid) {
-    await this.firstNameField.fill(firstname);
-    await this.lastNameField.fill(lastname);
-    await this.employeeIdField.last().fill(employeeid);
-    await this.saveButton.click();
-    await this.page.waitForLoadState("networkidle"); 
-  }
 } 
-
 module.exports = { AddEmployeePage };

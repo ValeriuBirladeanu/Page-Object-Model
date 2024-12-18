@@ -7,7 +7,6 @@ class MainPage {
   async getMenuItems() {
     await this.menuItems.nth(0).waitFor();
     const titles = await this.menuItems.allTextContents();
-    console.log(titles)
     return titles;
   }
 }
