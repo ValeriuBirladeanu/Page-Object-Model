@@ -24,7 +24,7 @@ test.beforeAll(async ({ browser, validCredentials }) => {
   await context.addCookies(cookies);
 });
 
-test.only("Change password for user", async ({ validCredentials, randomData }) => {
+test("Change password for user", async ({ validCredentials, randomData }) => {
   const headerPage = new HeaderPage(page);
   await headerPage.goToProfileChangePassword();
   await expect(page).toHaveURL(url.userUpdatePasswordUrl);

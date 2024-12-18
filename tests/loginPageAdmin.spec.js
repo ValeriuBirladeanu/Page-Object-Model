@@ -34,7 +34,7 @@ test("Verify that invalid credentials display the correct error message", async 
     await test.step(`Testing scenario: ${description}`, async () => {
       await loginPage.goTo(url.loginUrl);
       await loginPage.fillUsernameField(username);
-      await loginPage.fillPasswordFiled(password);
+      await loginPage.fillPasswordField(password);
       await loginPage.submit();
       await expect(page).not.toHaveURL(url.dashboardUrl);
       await expect(page).toHaveURL(url.loginUrl);
@@ -56,7 +56,7 @@ test('Verify the behavior when fields are left blank and the "Login" button is c
     await test.step(`Testing scenario: ${description}`, async () => {
       await loginPage.goTo(url.loginUrl);
       await loginPage.fillUsernameField(username);
-      await loginPage.fillPasswordFiled(password);
+      await loginPage.fillPasswordField(password);
       await loginPage.submit();
       await expect(page).not.toHaveURL(url.dashboardUrl);
       await expect(page).toHaveURL(url.loginUrl);

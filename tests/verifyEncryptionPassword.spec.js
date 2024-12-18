@@ -9,7 +9,7 @@ test("Verify encryption of sensitive data like passwords (check password is show
 }) => {
   const loginPage = new LoginPage(page);
   await loginPage.goTo(url.loginUrl);
-  await loginPage.fillPasswordFiled(randomData.password);
+  await loginPage.fillPasswordField(randomData.password);
   const inputType = await loginPage.getPasswordFieldType();
   expect(inputType).toBe("password");
 
