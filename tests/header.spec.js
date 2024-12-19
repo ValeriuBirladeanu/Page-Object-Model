@@ -50,6 +50,7 @@ test("Change password for user", async ({ randomData }) => {
 
   // Schimbarea parolei
   const newPassword = randomData.password;
+  console.log("oldPassword: ", newUserPayload.password);
   console.log("newPassword: ", newPassword);
   await headerPage.fillCurrentPasswordField(newUserPayload.password); // Parola veche
   await headerPage.fillPasswordField(newPassword);
