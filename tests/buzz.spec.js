@@ -14,9 +14,13 @@ test.beforeAll(async ({ browser, validCredentials }) => {
   apiUtils = new APIUtils();
 
   apiUtils.apiContext = await request.newContext({
-    baseURL: url.loginUrl
-    });
-  const cookies = await apiUtils.getCookie(page, validCredentials.username, validCredentials.password);
+    baseURL: url.loginUrl,
+  });
+  const cookies = await apiUtils.getCookie(
+    page,
+    validCredentials.username,
+    validCredentials.password
+  );
   await context.addCookies(cookies);
 });
 
@@ -24,7 +28,7 @@ test("Add message in Buzz", async ({ randomData }) => {
   const buzzPage = new BuzzPage(page);
   await buzzPage.goToBuzzMenu();
 
- const postBuzzPayLoad = {
+  const postBuzzPayLoad = {
     type: "text",
     text: randomData.message,
   };
@@ -33,5 +37,5 @@ test("Add message in Buzz", async ({ randomData }) => {
   await page.reload();
 
   const postText = await buzzPage.postedText.first().textContent();
-  expect(postText).toContain(randomData.message); 
+  expect(postText).toContain(randomData.message);
 });

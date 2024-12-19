@@ -35,7 +35,7 @@ test.beforeEach(async () => {
   console.log("newUserPayload.password", newUserPayload.password);
 });
 
-test.only("Validate left menu list of items for user", async ({ page }) => {
+test("Validate left menu list of items for user", async ({ page }) => {
   const loginPage = new LoginPage(page);
   const mainPage = new MainPage(page);
   
@@ -51,8 +51,8 @@ test.only("Validate left menu list of items for user", async ({ page }) => {
 
   // Obținem elementele din meniul stâng și le comparăm cu lista așteptată
   const actualMenuItems = await mainPage.getMenuItems();
-  expect(actualMenuItems).toEqual(menuItems);
 
   console.log("Expected menu items:", menuItems);
   console.log("Actual menu items:", actualMenuItems);
+  expect(actualMenuItems).toEqual(menuItems);
 });

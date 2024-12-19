@@ -14,9 +14,13 @@ test.beforeAll(async ({ browser, validCredentials }) => {
   apiUtils = new APIUtils();
 
   apiUtils.apiContext = await request.newContext({
-    baseURL: url.loginUrl
-    });
-  const cookies = await apiUtils.getCookie(page, validCredentials.username, validCredentials.password);
+    baseURL: url.loginUrl,
+  });
+  const cookies = await apiUtils.getCookie(
+    page,
+    validCredentials.username,
+    validCredentials.password
+  );
   await context.addCookies(cookies);
 });
 
@@ -30,9 +34,9 @@ test("Add new Pay Grades (admin)", async ({ randomData }) => {
   await addPayGrades.goToPayGrades();
   await expect(page).toHaveURL(url.payGradesListUrl);
   await expect(addPayGrades.payGradesText).toBeVisible();
-  
+
   const newPayGrades = await addPayGrades.addPayGrades(randomData.jobTitle);
-  console.log('newPayGrades:', newPayGrades);
+  console.log("newPayGrades:", newPayGrades);
   await expect(addPayGrades.editPayGradesText).toBeVisible();
 
   await addPayGrades.goToPayGrades();

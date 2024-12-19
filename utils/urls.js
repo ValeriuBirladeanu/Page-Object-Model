@@ -11,7 +11,7 @@ export const url = {
     "https://opensource-demo.orangehrmlive.com/web/index.php/pim/addEmployee",
   employeeListUrl:
     "https://opensource-demo.orangehrmlive.com/web/index.php/pim/viewEmployeeList",
-  responseListEmployeeUrl:
+  listEmployeeUrl:
     "https://opensource-demo.orangehrmlive.com/web/index.php/api/v2/pim/employees",
   postBuzzUrl:
     "https://opensource-demo.orangehrmlive.com/web/index.php/api/v2/buzz/posts",

@@ -15,9 +15,9 @@ class APIUtils {
     const cookies = await context.cookies();
     const cookieHeader = cookies.map((c) => `${c.name}=${c.value}`).join("; ");
 
-    const response = await this.apiContext.get(url.responseListEmployeeUrl, {
+    const response = await this.apiContext.get(url.listEmployeeUrl, {
       headers: {
-        Cookie: cookieHeader, 
+        Cookie: cookieHeader,
         "Content-Type": "application/json",
       },
     });
@@ -61,6 +61,48 @@ class APIUtils {
 
     const postResponseJson = await postResponse.json();
     return postResponseJson;
+  }
+
+  async addEmployee(employeePayload, context) {
+    const cookies = await context.cookies();
+    const cookieHeader = cookies.map((c) => `${c.name}=${c.value}`).join("; ");
+
+    const response = await this.apiContext.post(url.listEmployeeUrl, {
+      data: employeePayload,
+      headers: {
+        Cookie: cookieHeader,
+        "Content-Type": "application/json",
+      },
+    });
+    return response;
+  }
+
+  async updateJobDetails(empNumber, jobDetailsPayload, context) {
+    const cookies = await context.cookies();
+    const cookieHeader = cookies.map((c) => `${c.name}=${c.value}`).join("; ");
+
+    const response = await this.apiContext.put(`${url.listEmployeeUrl}/${empNumber}/job-details`, {
+      data: jobDetailsPayload,
+      headers: {
+        Cookie: cookieHeader,
+        "Content-Type": "application/json",
+      },
+    });
+    return response
+  }
+
+  async addSupervisor(empNumber, supervisorPayload, context) {
+    const cookies = await context.cookies();
+    const cookieHeader = cookies.map((c) => `${c.name}=${c.value}`).join("; ");
+
+    const response = await this.apiContext.post(`${url.listEmployeeUrl}/${empNumber}/supervisors`, {
+      data: supervisorPayload,
+      headers: {
+        Cookie: cookieHeader,
+        "Content-Type": "application/json",
+      },
+    });
+    return response;
   }
 }
 

@@ -5,6 +5,6 @@ const newUserPayload = {
     password: faker.internet.password(),
     status: true,
     userRoleId: 2,
-    empNumber: 193,
+    empNumber: 7,
   };
   module.exports = { newUserPayload };
