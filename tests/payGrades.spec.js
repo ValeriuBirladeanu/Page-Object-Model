@@ -1,4 +1,4 @@
-const { PayGrades } = require("../pages/Admin/payGradesPage");
+const { POManager } = require("../pages/POManager.js");
 const { url } = require("../utils/urls.js");
 const { expect, request } = require("@playwright/test");
 const { APIUtils } = require("../utils/APIUTILS.js");
@@ -25,24 +25,25 @@ test.beforeAll(async ({ browser, validCredentials }) => {
 });
 
 test("Add new Pay Grades (admin)", async ({ randomData }) => {
-  const addPayGrades = new PayGrades(page);
-  await addPayGrades.goToAdminMenu();
+  const poManager = new POManager(page);
+  const payGrades = poManager.getPayGrades();
+  await payGrades.goToAdminMenu();
   await expect(page).toHaveURL(url.adminUrl);
-  await expect(addPayGrades.systemUsersText).toBeVisible();
+  await expect(payGrades.systemUsersText).toBeVisible();
 
-  await addPayGrades.goToPayGrades();
+  await payGrades.goToPayGrades();
   await expect(page).toHaveURL(url.payGradesListUrl);
-  await expect(addPayGrades.payGradesText).toBeVisible();
+  await expect(payGrades.payGradesText).toBeVisible();
 
-  const newPayGrades = await addPayGrades.addPayGrades(randomData.jobTitle);
+  const newPayGrades = await payGrades.addPayGrades(randomData.jobTitle);
   console.log("newPayGrades:", newPayGrades);
-  await expect(addPayGrades.editPayGradesText).toBeVisible();
+  await expect(payGrades.editPayGradesText).toBeVisible();
 
-  await addPayGrades.goToPayGrades();
+  await payGrades.goToPayGrades();
   await expect(page).toHaveURL(url.payGradesListUrl);
-  await expect(addPayGrades.payGradesText).toBeVisible();
+  await expect(payGrades.payGradesText).toBeVisible();
 
-  const extractedPayGrades = await addPayGrades.extractPayGrades();
+  const extractedPayGrades = await payGrades.extractPayGrades();
   expect(extractedPayGrades).toContain(newPayGrades.name);
 });
  

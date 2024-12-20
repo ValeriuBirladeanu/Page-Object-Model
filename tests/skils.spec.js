@@ -1,4 +1,4 @@
-const { SkilsPage } = require("../pages/Admin/SkilsPage");
+const { POManager } = require("../pages/POManager.js");
 const { url } = require("../utils/urls.js");
 const { expect, request } = require("@playwright/test");
 const { APIUtils } = require("../utils/APIUTILS.js");
@@ -21,7 +21,8 @@ test.beforeAll(async ({ browser, validCredentials }) => {
 });
 
 test("Add and delete skill", async ({ randomData }) => {
-  const skils = new SkilsPage(page);
+  const poManager = new POManager(page);
+  const skils = poManager.getSkilsPage();
   await skils.goToAdminMenu();
   await expect(page).toHaveURL(url.adminUrl);
   await expect(skils.systemUsersText).toBeVisible();

@@ -1,4 +1,4 @@
-const { EmployeeListPage } = require("../pages/PIM/EmployeeListPage.js");
+const { POManager } = require("../pages/POManager.js");
 const { url } = require("../utils/urls.js");
 const { expect, request } = require("@playwright/test");
 const { APIUtils } = require("../utils/APIUTILS.js");
@@ -37,7 +37,8 @@ test.beforeEach(async () => {
 });
 
 test("Search Employee in Directory (by each search field)", async () => {
-  const employeeListPage = new EmployeeListPage(page);
+  const poManager = new POManager(page);
+  const employeeListPage = poManager.getEmployeeListPage();
   await employeeListPage.goToPimMenu();
   await expect(employeeListPage.employeeInformationText).toBeVisible();
 
@@ -58,4 +59,4 @@ test("Search Employee in Directory (by each search field)", async () => {
   await expect(employeeListPage.cellsTabel.nth(6)).toHaveText(jobUpdateResponseJson.data.subunit.name);
   await expect(employeeListPage.cellsTabel.nth(7)).toContainText(supervisorResponseJson.data.supervisor.firstName);
   await expect(employeeListPage.cellsTabel.nth(7)).toContainText(supervisorResponseJson.data.supervisor.lastName);
-});
+}); 

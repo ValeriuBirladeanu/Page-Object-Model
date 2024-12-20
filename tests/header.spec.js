@@ -1,5 +1,5 @@
+const { POManager } = require("../pages/POManager.js");
 const { APIUtils } = require("../utils/APIUTILS.js");
-const { HeaderPage } = require("../pages/HeaderPage");
 const { url } = require("../utils/urls.js");
 const { expect, request} = require("@playwright/test");
 const { dataTestAdmin: test } = require("../utils/baseDataAdmin");
@@ -32,7 +32,8 @@ test.beforeEach(async () => {
   console.log("New user created:", newUser);
 
   // Logare cu utilizatorul nou creat
-  const headerPage = new HeaderPage(page);
+  const poManager = new POManager(page);
+  const headerPage = poManager.getHeaderPage();
   await headerPage.goToLogout();
   await expect(page).toHaveURL(url.loginUrl);
   await expect(headerPage.loginSlot).toBeVisible();
@@ -41,7 +42,8 @@ test.beforeEach(async () => {
 });
 
 test("Change password for user", async ({ randomData }) => {
-  const headerPage = new HeaderPage(page);
+  const poManager = new POManager(page);
+  const headerPage = poManager.getHeaderPage();
 
   // Navigare la schimbarea parolei
   await headerPage.goToProfileChangePassword();

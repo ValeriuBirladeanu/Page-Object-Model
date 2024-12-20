@@ -1,4 +1,5 @@
-const { JobTitles } = require("../pages/Admin/jobTitlesPage");
+const { POManager } = require("../pages/POManager.js");
+
 const { url } = require("../utils/urls.js");
 const { expect, request } = require("@playwright/test");
 const { APIUtils } = require("../utils/APIUTILS.js");
@@ -25,16 +26,17 @@ test.beforeAll(async ({ browser, validCredentials }) => {
 });
 
 test("Add new Job Titles (admin)", async ({ randomData }) => {
-  const addJobTitles = new JobTitles(page);
-  await addJobTitles.goToAdminMenu();
+  const poManager = new POManager(page);
+  const jobTitles = poManager.getJobTitles();
+  await jobTitles.goToAdminMenu();
   await expect(page).toHaveURL(url.adminUrl);
-  await expect(addJobTitles.systemUsersText).toBeVisible();
+  await expect(jobTitles.systemUsersText).toBeVisible();
 
-  await addJobTitles.goToJobTitles();
+  await jobTitles.goToJobTitles();
   await expect(page).toHaveURL(url.jobTitlesListUrl);
-  await expect(addJobTitles.jobTitlesText).toBeVisible();
+  await expect(jobTitles.jobTitlesText).toBeVisible();
 
-  const newJobTitle = await addJobTitles.addJobTitles(
+  const newJobTitle = await jobTitles.addJobTitles(
     randomData.jobTitle,
     randomData.lastName,
     randomData.firstName
@@ -42,9 +44,9 @@ test("Add new Job Titles (admin)", async ({ randomData }) => {
   console.log("newJobTitle:", newJobTitle);
 
   await expect(page).toHaveURL(url.jobTitlesListUrl);
-  await expect(addJobTitles.jobTitlesText).toBeVisible();
+  await expect(jobTitles.jobTitlesText).toBeVisible();
 
-  const extractedJobTitles = await addJobTitles.extractJobTitles();
+  const extractedJobTitles = await jobTitles.extractJobTitles();
   expect(extractedJobTitles).toContain(newJobTitle.title);
   console.log("extractedJobTitles:", extractedJobTitles);
 });

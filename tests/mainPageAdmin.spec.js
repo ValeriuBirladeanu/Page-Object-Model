@@ -1,6 +1,5 @@
+const { POManager } = require("../pages/POManager.js");
 const { dataTestAdmin: test } = require("../utils/baseDataAdmin");
-import { MainPage } from "../pages/MainPage";
-import { LoginPage } from "../pages/LoginPage";
 import { url } from "../utils/urls";
 import { expect } from "@playwright/test";
 import { menuItems } from '../utils/staticDataAdmin';
@@ -10,8 +9,9 @@ test("Validate left menu list of items for admin", async ({
   page,
   validCredentials,
 }) => {
-  const mainPage = new MainPage(page);
-  const loginPage = new LoginPage(page);
+  const poManager = new POManager(page);
+  const loginPage = poManager.getLoginPage();
+  const mainPage = poManager.getMainPage();
   await loginPage.goTo(url.loginUrl);
   await loginPage.fillUsernameField(validCredentials.username);
   await loginPage.fillPasswordField(validCredentials.password);

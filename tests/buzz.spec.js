@@ -1,5 +1,5 @@
+const { POManager } = require("../pages/POManager.js");
 const { APIUtils } = require("../utils/APIUTILS.js");
-const { BuzzPage } = require("../pages/BuzzPage");
 const { url } = require("../utils/urls.js");
 const { expect, request } = require("@playwright/test");
 const { dataTestAdmin: test } = require("../utils/baseDataAdmin");
@@ -25,7 +25,8 @@ test.beforeAll(async ({ browser, validCredentials }) => {
 });
 
 test("Add and delete Newsfeed", async ({ randomData }) => {
-  const buzzPage = new BuzzPage(page);
+  const poManager = new POManager(page);
+  const buzzPage = poManager.getBuzzPage();
   await buzzPage.goToBuzzMenu();
   await expect(page).toHaveURL(url.buzzUrl);
   await expect(buzzPage.buzzNewsfeedText).toBeVisible();
@@ -46,7 +47,8 @@ test("Add and delete Newsfeed", async ({ randomData }) => {
 });
 
 test("Add message in Buzz", async ({ randomData }) => {
-  const buzzPage = new BuzzPage(page);
+  const poManager = new POManager(page);
+  const buzzPage = poManager.getBuzzPage();
   await buzzPage.goToBuzzMenu();
   await expect(page).toHaveURL(url.buzzUrl);
   await expect(buzzPage.buzzNewsfeedText).toBeVisible();

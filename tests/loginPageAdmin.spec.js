@@ -1,5 +1,5 @@
+const { POManager } = require("../pages/POManager.js");
 const { dataTestAdmin: test } = require("../utils/baseDataAdmin");
-import { LoginPage } from "../pages/LoginPage";
 import { url } from "../utils/urls";
 import { expect } from "@playwright/test";
 
@@ -7,7 +7,8 @@ test("Verify that valid credentials allow the user to log in successfully", asyn
   page,
   validCredentials,
 }) => {
-  const loginPage = new LoginPage(page);
+  const poManager = new POManager(page);
+  const loginPage = poManager.getLoginPage();;
   await loginPage.goTo(url.loginUrl);
   await loginPage.fillUsernameField(validCredentials.username);
   await loginPage.fillPasswordField(validCredentials.password);
@@ -22,7 +23,8 @@ test("Verify that invalid credentials display the correct error message", async 
   invalidCredential2,
   invalidCredential3,
 }) => {
-  const loginPage = new LoginPage(page);
+  const poManager = new POManager(page);
+  const loginPage = poManager.getLoginPage();
   const invalidCredentialsSet = [
     invalidCredential1,
     invalidCredential2,
@@ -48,7 +50,8 @@ test('Verify the behavior when fields are left blank and the "Login" button is c
   blankFields2,
   blankFields3,
 }) => {
-  const loginPage = new LoginPage(page);
+  const poManager = new POManager(page);
+  const loginPage = poManager.getLoginPage();
   const blankFieldsSet = [blankFields1, blankFields2, blankFields3];
 
   for (const { username, password, description } of blankFieldsSet) {

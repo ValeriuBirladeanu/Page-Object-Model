@@ -1,9 +1,8 @@
-const { AddEmployeePage } = require("../pages/PIM/AddEmployeePage.js");
+const { POManager } = require("../pages/POManager.js");
 const { url } = require("../utils/urls.js");
 const { expect, request } = require("@playwright/test");
 const { APIUtils } = require("../utils/APIUTILS.js");
 const { dataTestAdmin: test } = require("../utils/baseDataAdmin");
-
 
 let context; 
 let page;
@@ -24,7 +23,8 @@ test.beforeAll(async ({ browser, validCredentials }) => {
 test("Verify that duplicate employee IDs are not allowed", async ({
   randomData, 
 }) => {
-  const addEmployee = new AddEmployeePage(page);
+  const poManager = new POManager(page);
+  const addEmployee = poManager.getAddEmployee();
   await addEmployee.goToPimMenu();
   const existedEmployeeId = await apiUtils.getAlredyExistEmployeesId(context);
   await addEmployee.goToAddEmployee();

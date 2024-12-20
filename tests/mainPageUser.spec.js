@@ -1,6 +1,5 @@
+const { POManager } = require("../pages/POManager.js");
 const { dataTestAdmin: test } = require("../utils/baseDataAdmin");
-const { MainPage } = require("../pages/MainPage");
-const { LoginPage } = require("../pages/LoginPage");
 const { url } = require("../utils/urls.js");
 const { expect, request } = require("@playwright/test");
 const { menuItems } = require("../utils/staticDataUser");
@@ -36,8 +35,9 @@ test.beforeEach(async () => {
 });
 
 test("Validate left menu list of items for user", async ({ page }) => {
-  const loginPage = new LoginPage(page);
-  const mainPage = new MainPage(page);
+  const poManager = new POManager(page);
+  const loginPage = poManager.getLoginPage();
+  const mainPage = poManager.getMainPage()
   
   // Navigăm la pagina de login și ne autentificăm cu utilizatorul creat
   await loginPage.goTo(url.loginUrl);

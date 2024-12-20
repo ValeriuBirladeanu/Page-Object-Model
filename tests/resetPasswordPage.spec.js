@@ -1,6 +1,5 @@
+const { POManager } = require("../pages/POManager.js");
 const { dataTestAdmin: test } = require("../utils/baseDataAdmin");
-import { LoginPage } from "../pages/LoginPage";
-import { ResetPasswordPage } from "../pages/ResetPasswordPage";
 import { url } from "../utils/urls";
 import { expect } from "@playwright/test";
 
@@ -8,8 +7,9 @@ test('Verify that the "Forgot Password" functionality works as expected. (with o
   page,
   validCredentials,
 }) => {
-  const loginPage = new LoginPage(page);
-  const resetPasswordPage = new ResetPasswordPage(page);
+  const poManager = new POManager(page);
+  const loginPage = poManager.getLoginPage();
+  const resetPasswordPage = poManager.getResetPasswordPage();
   await loginPage.goTo(url.loginUrl);
   await loginPage.clickForgotYourPassword();
   await expect(page).toHaveURL(url.requestResetPasswordUrl);

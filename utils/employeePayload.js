@@ -10,7 +10,7 @@ const employeePayload = {
 
 const jobDetailsPayload = {
   joinedDate: null,
-  jobTitleId: 23,
+  jobTitleId: 33,
   empStatusId: 1,
   subunitId: 2,
 };
