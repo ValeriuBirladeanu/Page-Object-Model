@@ -13,6 +13,8 @@ export const url = {
     "https://opensource-demo.orangehrmlive.com/web/index.php/pim/viewEmployeeList",
   listEmployeeUrl:
     "https://opensource-demo.orangehrmlive.com/web/index.php/api/v2/pim/employees",
+  buzzUrl:
+    "https://opensource-demo.orangehrmlive.com/web/index.php/buzz/viewBuzz",
   postBuzzUrl:
     "https://opensource-demo.orangehrmlive.com/web/index.php/api/v2/buzz/posts",
   adminUrl:

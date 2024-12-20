@@ -24,9 +24,32 @@ test.beforeAll(async ({ browser, validCredentials }) => {
   await context.addCookies(cookies);
 });
 
+test("Add and delete Newsfeed", async ({ randomData }) => {
+  const buzzPage = new BuzzPage(page);
+  await buzzPage.goToBuzzMenu();
+  await expect(page).toHaveURL(url.buzzUrl);
+  await expect(buzzPage.buzzNewsfeedText).toBeVisible();
+
+  const postedMessage = await buzzPage.addNewsfeed(randomData.message);
+  console.log(postedMessage);
+  await page.reload();
+  const extractedPostedBuzz = await buzzPage.extractNewsfeeds();
+
+  console.log("extractedPostedBuzz:", extractedPostedBuzz);
+  expect(extractedPostedBuzz).toContain(postedMessage.text);
+
+  await buzzPage.deleteNewsfeed(postedMessage.text);
+
+  const updatedPostedMessage = await buzzPage.extractNewsfeeds();
+  console.log("updatedPostedMessage:", updatedPostedMessage);
+  expect(updatedPostedMessage).not.toContain(postedMessage.texe);
+});
+
 test("Add message in Buzz", async ({ randomData }) => {
   const buzzPage = new BuzzPage(page);
   await buzzPage.goToBuzzMenu();
+  await expect(page).toHaveURL(url.buzzUrl);
+  await expect(buzzPage.buzzNewsfeedText).toBeVisible();
 
   const postBuzzPayLoad = {
     type: "text",

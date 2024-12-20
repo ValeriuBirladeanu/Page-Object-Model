@@ -25,7 +25,6 @@ test.beforeAll(async ({ browser, validCredentials }) => {
 });
 
 test("Add new Pay Grades (admin)", async ({ randomData }) => {
-  test.setTimeout(100000);
   const addPayGrades = new PayGrades(page);
   await addPayGrades.goToAdminMenu();
   await expect(page).toHaveURL(url.adminUrl);
@@ -46,3 +45,4 @@ test("Add new Pay Grades (admin)", async ({ randomData }) => {
   const extractedPayGrades = await addPayGrades.extractPayGrades();
   expect(extractedPayGrades).toContain(newPayGrades.name);
 });
+ 
