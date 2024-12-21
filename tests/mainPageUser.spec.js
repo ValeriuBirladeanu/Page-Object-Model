@@ -8,22 +8,26 @@ const { newUserPayload } = require("../utils/userPayload");
 
 let context;
 let page;
-let apiUtils;
+let apiUtils; 
 
 test.beforeAll(async ({ browser, validCredentials }) => {
-  context = await browser.newContext();
-  page = await context.newPage();
-  apiUtils = new APIUtils();
-
-  apiUtils.apiContext = await request.newContext({
-    baseURL: url.loginUrl,
+  await test.step("Setup browser context and page", async () => {
+    context = await browser.newContext();
+    page = await context.newPage();
+    apiUtils = new APIUtils();
   });
-  const cookies = await apiUtils.getCookie(
-    page,
-    validCredentials.username,
-    validCredentials.password
-  );
-  await context.addCookies(cookies);
+
+  await test.step("Initialize API context and retrieve cookies", async () => {
+    apiUtils.apiContext = await request.newContext({
+      baseURL: url.loginUrl,
+    });
+    const cookies = await apiUtils.getCookie(
+      page,
+      validCredentials.username,
+      validCredentials.password
+    );
+    await context.addCookies(cookies);
+  });
 });
 
 test.beforeEach(async () => {
@@ -31,28 +35,30 @@ test.beforeEach(async () => {
   const newUser = await apiUtils.addUser(newUserPayload, context);
   console.log("New user created:", newUser);
   console.log("newUserPayload.username:", newUserPayload.username);
-  console.log("newUserPayload.password", newUserPayload.password);
+  console.log("newUserPayload.password", newUserPayload.password); 
 });
 
-test("Validate left menu list of items for user", async ({ page }) => {
+test.only("Validate left menu list of items for user", async ({ page }) => {
   const poManager = new POManager(page);
   const loginPage = poManager.getLoginPage();
-  const mainPage = poManager.getMainPage()
-  
-  // Navigăm la pagina de login și ne autentificăm cu utilizatorul creat
-  await loginPage.goTo(url.loginUrl);
-  await loginPage.fillUsernameField(newUserPayload.username);
-  await loginPage.fillPasswordField(newUserPayload.password);
-  await loginPage.submit();
-  
-  // Verificăm că utilizatorul este autentificat și ajungem pe dashboard
-  await expect(page).toHaveURL(url.dashboardUrl);
-  await expect(loginPage.dashboardText).toBeVisible();
+  const mainPage = poManager.getMainPage();
 
-  // Obținem elementele din meniul stâng și le comparăm cu lista așteptată
-  const actualMenuItems = await mainPage.getMenuItems();
+  await test.step("Navigate to login page and log in with the created user", async () => {
+    await loginPage.goTo(url.loginUrl);
+    await loginPage.fillUsernameField(newUserPayload.username);
+    await loginPage.fillPasswordField(newUserPayload.password);
+    await loginPage.submit();
+  });
 
-  console.log("Expected menu items:", menuItems);
-  console.log("Actual menu items:", actualMenuItems);
-  expect(actualMenuItems).toEqual(menuItems);
+  await test.step("Verify user is authenticated and redirected to the dashboard", async () => {
+    await expect(page).toHaveURL(url.dashboardUrl);
+    await expect(loginPage.dashboardText).toBeVisible();
+  });
+
+  await test.step("Validate left menu items match the expected list", async () => {
+    const actualMenuItems = await mainPage.getMenuItems();
+    console.log("Expected menu items:", menuItems);
+    console.log("Actual menu items:", actualMenuItems);
+    expect(actualMenuItems).toEqual(menuItems);
+  });
 });
